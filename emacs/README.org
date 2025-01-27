@@ -1,0 +1,94 @@
+#+title: Emacs Configuration Overview
+#+language: en
+#+startup: overview
+#+options: toc:nil html-postamble:nil
+
+** Core Setup and Package Management
++ Uses =.emacs= for customization
++ Utilizes =MELPA= package repository
+
+** UI Configuration
++ It has Doom theme and modeline
++ Requires =nerd-icons= package for proper icon rendering
+
+** Key Features
+*** Development Tools
++ SLIME Integration
+  + Configured for SLIME and SBCL implementation
+  + Enhanced with Rainbow Delimiters for parentheses
+  + Includes Smartparens for automatic parentheses pairing
+    
++ Code Enhancement
+  + Rainbow parentheses and delimiters
+  + Includes Smartparens for automatic parentheses pairing
+  + Lambda symbol prettification
+  + Global prettify symbols mode
+  + Line numbering
+  + Page break line visualization
+  + History saving
+  + Date and time display
+
+*** Interface Improvements
+
++ Navigation & Search
+  + =Counsel= for enhanced completion
+  + =Projectile= for project management
+  + =Neotree= for directory tree visualization
+  + Custom three-window split command (=C-c 3=)
+
++ Visual Enhancements
+  + Doom theme (=gruvbox= variant) or (=manegarm= variant)
+  + Customized modeline with various indicators
+  + Dashboard with random banners and quotes
+  + =All-the-icon= integration
+
+*** Org Mode Features
+
++ Basic Configuration
+  + Custom bullet points and formatting
+  + Visual fill column mode
+  + Modern styling and emphasis markers
+
++ Functionality
+  + Org capture
+  + Org agenda
+  + Custom timestamp formatting
+  + Enhancements for headings
+
+*** Terminal
+
++ VTERM Integration
+  + Full terminal emulator functionality
+
+*** Keybindings
+
+  + F8: Toggle Neotree
+  + C-c e: Open init file
+  + C-c c: Org capture
+  + C-c a: Org agenda
+  + ESC: Quit prompts
+  + Various Counsel keybindings
+  + Emacs standard built-in commands
+
+*** Additional Features
+
++ History and State Management
+  + Minibuffer history saving
+  + Desktop state preservation
+  + Bookmark management
+
++ Visual Customization
+  + Text scaling with hydra
+  + Theme selection via counsel
+  + Line number formatting
+  + Custom modeline configuration
+  + Proper indentation.
+
+** File Structure
+#+begin_src
+│   ├── general.el        ; General settings
+│   ├── keys.el           ; Key bindings
+│   ├── libraries.el      ; Package management
+│   ├── misc.el           ; Miscellaneous settings
+│   └── org.el            ; Org-mode configuration
+#+end_src

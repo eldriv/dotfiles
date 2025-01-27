@@ -1,0 +1,41 @@
+#+title: 
+
+* Overview
+
+This repository contains of all my configurations.
+
+* Clone repository
+#+begin_src
+git clone git@github.com:nyc2o/dotfiles.git
+#+end_src
+
+* Installation
+
+To install all the configurations that have an automatic symbolic link to $HOME, run
+#+begin_src
+make install 
+#+end_src
+
+To install individual config
+#+begin_src
+;; vim
+make install-vim
+
+;; doom
+make install-doom
+
+;; emacs
+make install-emacs
+
+;; zshell
+make install-zshell
+
+;; xmodmap
+make install-xmodmap
+
+;; tmux
+make install-tmux
+
+#+end_src
+
+
