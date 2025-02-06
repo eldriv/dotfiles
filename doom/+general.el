@@ -1,10 +1,5 @@
 ;;; $DOOM/general.el -*- lexical-binding: t; -*-
 
-(defun setup-font ()
-  "Setup Doom fonts."
-  (when (string-equal (system-name) "eldriv")
-    (set-frame-font "CommitMono-12" nil t)))
-
 (defun set-modes (modes)
   "Set multiple modes with key-value pairs."
   (cl-loop for (key . val) in modes
@@ -77,7 +72,6 @@
 (add-hook 'after-init-hook #'nyc-setup-pretty-symbols)
 
 ;; Now setup everything
-(setup-font)
 (setup-ui)
 (setup-theme)
 (setup-hooks)

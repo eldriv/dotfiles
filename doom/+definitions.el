@@ -123,6 +123,7 @@
       (point))))
 
 (defun e ()
+
   "Get the ending position for wrapping text.."
   (if (use-region-p)
       (region-end)
@@ -141,3 +142,53 @@
             (goto-char start)
             (insert "~"))
           (goto-char (+ end 2))))
+
+(defcmd my-switch-to-sly-mrepl-window ()
+        "Switch to the SLY window if present."
+        (let ((window (get-buffer-window (sly-mrepl--find-create (sly-connection)))))
+          (select-window window)))
+
+(defvar avoid-window-regexp "^[0-9]$")
+
+(defcmd my-other-window (&optional arg)
+        "Similar to `other-window', but try to avoid windows whose buffers
+match `avoid-window-regexp'"
+        (let* ((window-list (delq (selected-window)
+                                  (if (and arg (< arg 0))
+                                      (reverse (window-list))
+                                    (window-list))))
+               (filtered-window-list
+                (cl-remove-if
+                 (lambda (w)
+                   (string-match-p avoid-window-regexp
+                                   (buffer-name (window-buffer w))))
+                 window-list)))
+          (if filtered-window-list
+              (select-window (car filtered-window-list))
+            (and window-list
+                 (select-window (car window-list))))))
+
+(defmacro def-pairs (pairs)
+  "Define functions for pairing. PAIRS is an alist of (NAME . STRING) conses,
+where NAME is the function name that will be created and STRING is a
+single-character string that marks the opening character.
+
+  (def-pairs ((paren . \"(\")
+              (bracket . \"[\"))
+
+defines the functions WRAP-WITH-PAREN and WRAP-WITH-BRACKET,respectively."
+  `(progn
+     ,@(cl-loop for (key . val) in pairs
+                collect
+                `(defun ,(read (concat "wrap-with-" (prin1-to-string key) "s"))
+                     (&optional arg)
+                   (interactive "p")
+                   (sp-wrap-with-pair ,val)))))
+
+(def-pairs ((paren        . "(")
+            (bracket      . "[")
+            (brace        . "{")
+            (single-quote . "'")
+            (double-quote . "\"")
+            (tilde        . "~")
+            (equals       . "=")))
