@@ -6,6 +6,12 @@
   (define-key sly-mrepl-mode-map (kbd "<tab>") 'company-complete)
   (define-key sly-mrepl-mode-map (kbd "TAB") 'company-complete))
 
+(setq org-latex-pdf-process
+      '("xelatex -interaction nonstopmode -output-directory %o %f"
+        "bibtex %b"
+        "xelatex -interaction nonstopmode -output-directory %o %f"
+        "xelatex -interaction nonstopmode -output-directory %o %f"))
+
 (after! org
   (setq org-directory "~/org/"
         org-agenda-files '("~/org")
@@ -13,7 +19,7 @@
         '(("s" "Snippet" entry
            (file+headline "n.org" "Captured Items")
            "* Note No. %^{}  \n")))
-  
+
   (setq deft-directory "~/org"
         deft-extensions '("org" "txt" "md")
         deft-recursive nil)

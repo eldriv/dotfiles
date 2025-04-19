@@ -29,6 +29,10 @@
   (map-workspace-keys treemacs-mode-map))
 
 
+(defun bind-company-keys ()
+  "Bind the company keys."
+  (map-company-keys global-map))
+
 (defun bind-toplevel-keys ()
   "Bind the toplevel keys."
   ;; General keybindings
@@ -69,8 +73,8 @@
   ;; Mark
   (map!
    :leader
-   :desc "Mark sexp"                 "v"       'mark-sexp
-   :desc "Mark defun"                "V"       'mark-defun
+   :desc "Mark sexp"                 "d v"       'mark-sexp
+   :desc "Mark defun"                "d V"       'mark-defun
    :desc "Backward-up"               "{"       'sp-backward-up-sexp
    :desc "backward-down"             "}"       'sp-backward-down-sexp))
 
@@ -131,6 +135,19 @@
    :prefix ("t" . "theme")
    :desc "Switch theme"              "t t" 'switch-theme))
 
+(defun bind-sly-keys ()
+  "Bind sly keys."
+  (map! :map sly-mrepl-mode-map
+        :n "<up>" 'sly-mrepl-previous-input-or-button
+        :n "<down>" 'sly-mrepl-next-input-or-button
+        :i "<up>" 'sly-mrepl-previous-input-or-button
+        :i "<down>" 'sly-mrepl-next-input-or-button
+        :i "<tab>" 'sly-mrepl-indent-and-complete-symbol
+        :i "TAB" 'sly-mrepl-indent-and-complete-symbol)
+  (map! :map sly-mrepl-mode-map
+        :i "<tab>" 'company-complete
+        :i "TAB" 'company-complete))
+
 ;; toplevel
 
 (bind-workspace-keys)
@@ -139,3 +156,4 @@
 (bind-main-keys)
 (bind-y-keys)
 (bind-z-keys)
+(bind-sly-keys)

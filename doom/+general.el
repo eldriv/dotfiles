@@ -18,6 +18,12 @@
     (global-set-key (kbd "<mouse-4>") 'scroll-down-line)
     (global-set-key (kbd "<mouse-5>") 'scroll-up-line)))
 
+
+(defun setup-variables ()
+  "Setup Emacs-wide variables."
+  (setq-default fill-column 80
+                sh-basic-offset 2))
+
 (defun nyc-runemacs/full-screen-setup ()
   "Make Emacs full-screen and adjust UI elements accordingly."
   (interactive)
@@ -73,6 +79,7 @@
 
 ;; Now setup everything
 (setup-ui)
+(setup-variables)
 (setup-theme)
 (setup-hooks)
 (require 'evil-digraphs)
