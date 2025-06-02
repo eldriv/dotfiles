@@ -1,12 +1,23 @@
 export PS1='%F{cyan}%B%n%b%f%B%F{magenta} %f%b%B%F{yellow}%m%f%b %F{green}%B%~%b%f %b%D{%n}%F{green}%B>%b%f%F{white} '
+alias cgrep="grep --color=always"
 
-export PATH="$HOME/script:$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$PATH:/home/eldriv/.local/share/gem/ruby/3.3.0/bin"
+export PATH="$HOME/script:$HOME/.emacs.d/bin:$HOME/bin:$HOME/bin:$HOME/src/clingon-cli/cli-ems:$PATH"
 
 # Display list of directories and files as well as hidden files.
 function l {
   eza -s modified -Ah "$@"
 }
-	
+
+function ch {
+  duf
+}
+
+function bth {
+  inxi --battery
+}
+
 # Display list of directories with their permissions 
 function ll {
   l -lO "$@"
@@ -14,7 +25,7 @@ function ll {
 
 # Function to open the NixOS configuration
 function root-nixos-config {
-  sudo nano /etc/nixos/configuration.nix
+  sudo vim /etc/nixos/configuration.nix
 }
 
 # Function to search the definition inside maries' source file
@@ -222,3 +233,112 @@ function git {
     esac
   fi
 }
+
+function fp () {
+  echo "${1:A}"
+}
+
+function d () {
+  if (( ! $#@ )); then
+      builtin cd
+  elif [[ -d $argv[1] ]]; then
+      builtin cd "$(fp $argv[1])"
+      $argv[2,-1]
+  elif [[ "$1" = -<-> ]]; then
+      builtin cd $1 > /dev/null 2>&1
+      $argv[2,-1]
+  else
+    echo "$0: no such file or directory: $1"
+  fi
+}
+
+function dcl {
+d ~/common-lisp "${@}"
+}
+
+function dvera {
+dcl d vera "${@}"
+}
+
+function git-clone-loop {
+for repo in /home/eldriv/Downloads/gitea-docker/gitea-data/git/repositories/valmiz/*.git; do
+  repo_name=$(basename "${repo}".git)
+  git clone "${repo}" "$repo_name"
+done
+}
+
+function surl() {
+  for repo in /home/eldriv/kreisystems/*; do
+    if [ -d "$repo" ]; then
+      repo_name=$(basename "$repo")
+      echo "Changing URL for repo: $repo_name"
+      git -C "${repo}" remote set-url origin "git@github.com:krei-systems/$repo_name.git"
+    fi
+  done
+}
+
+
+function crurl {
+  for repo in /home/eldriv/kreisystems/*; do
+      echo "=================================================="
+      echo "DIR: ${repo}"
+      git -C ${repo} remote -v   
+      echo "=================================================="
+  done
+}
+function sbcl-dev {
+dev lisp sbcl "$@"
+}
+
+
+setopt SHARE_HISTORY
+HISTFILE=$HOME/.zhistory
+SAVEHIST=1000
+HISTSIZE=999
+setopt HIST_EXPIRE_DUPS_FIRST
+
+function dps {
+docker ps
+}
+
+function di {
+docker images
+}
+
+
+# Check if the OS is Linux
+linux_test() {
+  [[ "$(uname)" == "Linux" ]]
+}
+
+linux_test && {
+  function c {
+    local sel=clipboard
+    
+    if [[ $# == 1 ]]; then
+      if [[ -f "$1" ]]; then
+        echo -n "$(fullpath $1)" | xclip -selection $sel
+      else
+        echo -n "${@}" | xclip -selection $sel
+      fi
+    else
+      xclip -selection $sel "${@}"
+    fi
+  }
+
+  function c! { xsel -ib < "$1" }
+}
+
+function c@ { echo "${@}" | c }
+function c. { c "${PWD}" }
+function c/ { c "${PWD}/$1" }
+
+
+function mount-fns {
+nix-shell -p nfs-utils --run "sudo mount.nfs -o vers=3,nolock 192.168.1.75:/nfs/eldriv ~/mycloud"
+}
+
+function umount-fns {
+sudo umount ~/mycloud
+}
+
