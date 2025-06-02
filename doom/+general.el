@@ -35,7 +35,7 @@
   "Set theme for Doom"
   (setq doom-theme 'doom-manegarm
         +evil-want-o/O-to-continue-comments nil
-        fancy-splash-image "~/img/img.png"
+        fancy-splash-image "~/img/.png"
         display-line-numbers-type t
         evil-move-cursor-back t
         auto-save-default t

@@ -72,3 +72,4 @@
 (after! backup-each-save
   (push 'backup-each-save after-save-hook))
 
+(add-hook 'emacs-lisp-mode-hook 'flex-complete-mode)
